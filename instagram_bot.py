@@ -38,10 +38,11 @@ class Instagram:
     # Giris fonksiyonu. username ve password yazarak buton ile giris sagliyor.
     def logIn(self):
         print("-"*50)
-        self.username = input("lutfen kullanici adinizi giriniz: ")
-        self.password = input("lutfen sifrenizi giriniz: ")
+        #self.username = input("lutfen kullanici adinizi giriniz: ")
+        #self.password = input("lutfen sifrenizi giriniz: ")
 
-        
+        self.username = "jamorant001@gmail.com"
+        self.password = "123fb123"
 
         login_url = "https://www.instagram.com/"
         self.driver.get(login_url)
@@ -242,8 +243,9 @@ class Instagram:
             flistbutton.click()
             time.sleep(3)
             fbody  = self.driver.find_element_by_xpath("//div[@class='isgrP']")
+            following_numbers = self.driver.find_element_by_xpath("//*[@id='react-root']/section/main/div/header/section/ul/li[3]/a/span").text
             scroll = 0
-            while scroll < 20: 
+            while (scroll < int(following_numbers)/5): 
                 self.driver.execute_script('arguments[0].scrollTop = arguments[0].scrollTop + arguments[0].offsetHeight;', fbody)
                 time.sleep(1)
                 scroll += 1
@@ -251,7 +253,7 @@ class Instagram:
             flist = self.driver.find_elements_by_css_selector('div.PZuss > li ')
             
             index = 0
-            while (index <len(flist)):
+            while (index < len(flist)):
                 temp = flist[index].text
                 fsplit = temp.split()
                 print("{0}- {1}".format(index, fsplit[0]))
