@@ -83,6 +83,26 @@ class Instagram:
         print(warning)
 
     # ✔ ✔ ✔ ✔ ✔ ✔ ✔ ✔ ✔ ✔ ✔ ✔
+    # public - private durumu kontrolu yapan fonksiyon yapisi
+    def isPublic(self):
+        self.is_public = True
+
+        if "Bu Hesap Gizli" in self.driver.page_source:
+            self.is_public = False
+        else:
+            self.is_public = True
+
+    # ✔ ✔ ✔ ✔ ✔ ✔ ✔ ✔ ✔ ✔ ✔ ✔
+    # takip edilip edilmeme kontrolü yapan fonksiyon yapisiu
+    def isFollowing(self):
+        follow_button = self.driver.find_element_by_xpath("//*[@id='react-root']/section/main/div/header/section/div[1]/div[2]/div/div/div/span/span[1]/button").text
+        #follow_button = self.driver.find_element_by_xpath("//*[@id='react-root']/section/main/div/header/section/div[1]/div[2]/div/div[2]/div/span/span[1]/button").text
+        if (follow_button == "Takip Et"):
+            self.is_following = False
+        else:
+            self.is_following = True
+
+    # ✔ ✔ ✔ ✔ ✔ ✔ ✔ ✔ ✔ ✔ ✔ ✔
     # Arama fonksiyonu kullanicidan aranacak kelimeyi alip
     # arama kutusuna yaziyor ve ilk gelen sonuca tikliyor.
     def search(self, hashtag):
@@ -93,17 +113,6 @@ class Instagram:
         searchAccount = self.driver.find_element_by_xpath("//*[@id='react-root']/section/nav/div[2]/div/div/div[2]/div[4]/div/a[1]/div/div[2]")
         searchAccount.click()
         time.sleep(5)
-
-    # Anasayfaya donerek sirayla story izlemeye basliyor.
-    def watchStory(self):
-        self.homepage()
-        time.sleep(3)
-        self.warningMessage("Story sekmesindeyim.", 3)
-        #stories = self.driver.find_element_by_xpath("//*[@id='react-root']/section/main/section/div[1]/div[1]/div/div/div/div/ul/li[3]")
-        stories = self.driver.find_element_by_xpath("//*[@id='react-root']/section/main/section/div[1]/div[1]/div/div/div/div/ul/li[3]/div/button")
-        stories.click()
-        self.warningMessage("izliyorum", 3)
-        time.sleep(100)
 
     # ✔ ✔ ✔ ✔ ✔ ✔ ✔ ✔ ✔ ✔ ✔ ✔
     # kullanici ismi isteyerek profilindeki son postu begenen fonksiyon yapisi
@@ -119,6 +128,17 @@ class Instagram:
 
         exit_button = self.driver.find_element_by_xpath("/html/body/div[5]/div[3]/button")
         exit_button.click()
+    
+    # Anasayfaya donerek sirayla story izlemeye basliyor.
+    def watchStory(self):
+        self.homepage()
+        time.sleep(3)
+        self.warningMessage("Story sekmesindeyim.", 3)
+        #stories = self.driver.find_element_by_xpath("//*[@id='react-root']/section/main/section/div[1]/div[1]/div/div/div/div/ul/li[3]")
+        stories = self.driver.find_element_by_xpath("//*[@id='react-root']/section/main/section/div[1]/div[1]/div/div/div/div/ul/li[3]/div/button")
+        stories.click()
+        self.warningMessage("izliyorum", 3)
+        time.sleep(100)
 
     # ✔ ✔ ✔ ✔ ✔ ✔ ✔ ✔ ✔ ✔ ✔ ✔
     # kullanici ismi isteyerek profilindeki postlari gezen fonksiyon yapisi
@@ -155,7 +175,23 @@ class Instagram:
         else:
             self.warningMessage("({0}) => Bu hesap gizlidir.".format(userPost), 2)
 
+    # ✔ ✔ ✔ ✔ ✔ ✔ ✔ ✔ ✔ ✔ ✔ ✔  
+    def myProfilStats(self):
+        self.homePage()
+        profil = self.driver.find_element_by_class_name("gmFkV").send_keys(Keys.ENTER)
+        time.sleep(3)
+        userName = self.driver.find_element_by_xpath("//*[@id='react-root']/section/main/div/header/section/div[1]/h2").text
+        userBio = self.driver.find_element_by_xpath('/html/body/div[1]/section/main/div/header/section/div[2]').text
+        posts_numbers = self.driver.find_element_by_xpath("//*[@id='react-root']/section/main/div/header/section/ul/li[1]/span/span").text
+        followers_numbers = self.driver.find_element_by_xpath("//*[@id='react-root']/section/main/div/header/section/ul/li[2]/a/span").text
+        following_numbers = self.driver.find_element_by_xpath("//*[@id='react-root']/section/main/div/header/section/ul/li[3]/a/span").text
 
+        self.warningMessage("Kullanici...:   " + userName , 3)
+        print("Bio.........:   " + userBio)
+        print("Gonderi.....:   " + posts_numbers)
+        print("Takipci.....:   " + followers_numbers)
+        print("Takip.......:   " + following_numbers)
+    
     # ✔ ✔ ✔ ✔ ✔ ✔ ✔ ✔ ✔ ✔ ✔ ✔
     # kullanici istatistiklerini alan fonksiyon yapisi
     # kullanici bilgisi karsidan alinir. (search metodu ile bulunur)
@@ -199,16 +235,6 @@ class Instagram:
             self.warningMessage("({0}) => Bu hesap gizlidir.".format(userStat), 2)
 
     # ✔ ✔ ✔ ✔ ✔ ✔ ✔ ✔ ✔ ✔ ✔ ✔
-    # takip edilip edilmeme kontrolü yapan fonksiyon yapisiu
-    def isFollowing(self):
-        follow_button = self.driver.find_element_by_xpath("//*[@id='react-root']/section/main/div/header/section/div[1]/div[2]/div/div/div/span/span[1]/button").text
-        #follow_button = self.driver.find_element_by_xpath("//*[@id='react-root']/section/main/div/header/section/div[1]/div[2]/div/div[2]/div/span/span[1]/button").text
-        if (follow_button == "Takip Et"):
-            self.is_following = False
-        else:
-            self.is_following = True
-
-    # ✔ ✔ ✔ ✔ ✔ ✔ ✔ ✔ ✔ ✔ ✔ ✔
     # photoSorf() fonksiyon icinde bir sonraki posta gecen yardimci fonksiyon yapisi
     def nextPost(self, i):
         if(i == 0):
@@ -216,16 +242,6 @@ class Instagram:
         else:
             next_post = self.driver.find_element_by_xpath("/html/body/div[5]/div[1]/div/div/a[2]")
         next_post.click()
-
-    # ✔ ✔ ✔ ✔ ✔ ✔ ✔ ✔ ✔ ✔ ✔ ✔
-    # public - private durumu kontrolu yapan fonksiyon yapisi
-    def isPublic(self):
-        self.is_public = True
-
-        if "Bu Hesap Gizli" in self.driver.page_source:
-            self.is_public = False
-        else:
-            self.is_public = True
 
     # ✔ ✔ ✔ ✔ ✔ ✔ ✔ ✔ ✔ ✔ ✔ ✔
     # kullanici ismi isteyerek takip ettiklerinin listesini veren fonksiyon yapisi
@@ -297,25 +313,6 @@ class Instagram:
             self.warningMessage("({0}) => Bu hesap gizlidir.".format(account), 2)
 
     # ✔ ✔ ✔ ✔ ✔ ✔ ✔ ✔ ✔ ✔ ✔ ✔
-    def followList(self, account_list):
-        for item in range(len(account_list)):
-            self.account_url = self.url + account_list[item]
-            print(self.account_url)
-            self.driver.get(self.account_url)
-            self.isFollowing()
-            print("1")
-
-            if(self.is_following == True):
-                self.warningMessage("({0}) => Takip ediyorsun.".format(account_list[item]), 1)
-
-            else:
-                self.warningMessage("({0}) => Takip etmiyorsun.".format(account_list[item]), 2)
-
-                follow_button = self.driver.find_element_by_xpath("//*[@id='react-root']/section/main/div/header/section/div[1]/div[2]/div/div/div/span/span[1]/button")
-                follow_button.click()
-                self.warningMessage("({0}) => Takip edildi.".format(account_list[item]), 3)
-
-    # ✔ ✔ ✔ ✔ ✔ ✔ ✔ ✔ ✔ ✔ ✔ ✔
     # private olayini ayarla
     def unfollow(self, account):
         self.account_url = self.url + account
@@ -345,39 +342,41 @@ class Instagram:
         else:
             self.warningMessage("({0}) => Bu hesap gizlidir.".format(account), 2)
 
-    # ✔ ✔ ✔ ✔ ✔ ✔ ✔ ✔ ✔ ✔ ✔ ✔  
-    def myProfilStats(self):
-        self.homePage()
-        profil = self.driver.find_element_by_class_name("gmFkV").send_keys(Keys.ENTER)
-        time.sleep(3)
-        userName = self.driver.find_element_by_xpath("//*[@id='react-root']/section/main/div/header/section/div[1]/h2").text
-        userBio = self.driver.find_element_by_xpath('/html/body/div[1]/section/main/div/header/section/div[2]').text
-        posts_numbers = self.driver.find_element_by_xpath("//*[@id='react-root']/section/main/div/header/section/ul/li[1]/span/span").text
-        followers_numbers = self.driver.find_element_by_xpath("//*[@id='react-root']/section/main/div/header/section/ul/li[2]/a/span").text
-        following_numbers = self.driver.find_element_by_xpath("//*[@id='react-root']/section/main/div/header/section/ul/li[3]/a/span").text
+    # ✔ ✔ ✔ ✔ ✔ ✔ ✔ ✔ ✔ ✔ ✔ ✔
+    def followList(self, account_list):
+        for item in range(len(account_list)):
+            self.account_url = self.url + account_list[item]
+            print(self.account_url)
+            self.driver.get(self.account_url)
+            self.isFollowing()
+            print("1")
 
-        self.warningMessage("Kullanici...:   " + userName , 3)
-        print("Bio.........:   " + userBio)
-        print("Gonderi.....:   " + posts_numbers)
-        print("Takipci.....:   " + followers_numbers)
-        print("Takip.......:   " + following_numbers)
+            if(self.is_following == True):
+                self.warningMessage("({0}) => Takip ediyorsun.".format(account_list[item]), 1)
 
+            else:
+                self.warningMessage("({0}) => Takip etmiyorsun.".format(account_list[item]), 2)
+
+                follow_button = self.driver.find_element_by_xpath("//*[@id='react-root']/section/main/div/header/section/div[1]/div[2]/div/div/div/span/span[1]/button")
+                follow_button.click()
+                self.warningMessage("({0}) => Takip edildi.".format(account_list[item]), 3)
+    
     # ✔ ✔ ✔ ✔ ✔ ✔ ✔ ✔ ✔ ✔ ✔ ✔  
     def Menu(self):
         while True:
             print("#"*50)
             print("#            \u2714 1- Arama Yap                      #")
-            print("#             2- Story İzle                       #")
-            print("#            \u2714 3- Postlari Gez                   #")
-            print("#            \u2714 4- Son Post Begen                 #")
-            print("#            \u2714 5- Kullanici İstatistikleri       #")
-            print("#            \u2714 6- Takip Listesi?                 #")
-            print("#            \u2714 7- Kendi Profil Istatistiklerin   #")
-            print("#            \u2714 8- Cikis Yap                      #")
-            print("#            \u2714 9- url kontrol                    #")
-            print("#            \u2714 10- follow                        #")
-            print("#            \u2714 11- unfollow                      #")
-            print("#            \u2714 12- toplu follow                  #")
+            print("#            \u2714 2- Kendi Profil Istatistiklerin   #")
+            print("#            \u2714 3- Kullanici İstatistikleri       #")
+            print("#            \u2714 4- Takip Listesi?                 #")
+            print("#             5- Story İzle                       #")
+            print("#            \u2714 6- Postlari Gez                   #")
+            print("#            \u2714 7- Son Post Begen                 #")
+            print("#            \u2714 8- Follow                         #")
+            print("#            \u2714 9- Unfollow                       #")
+            print("#            \u2714 10- Toplu Follow                  #")
+            print("#            \u2714 11- Url Kontrol                   #")
+            print("#            \u2714 12- Cikis Yap                     #")
             print("#"*50)
             choice = input("Lütfen seciminizi yapiniz: ")
 
@@ -388,56 +387,53 @@ class Instagram:
                 self.warningMessage("Arama Yapildi.", 1)
 
             elif(choice == "2"):
-                self.warningMessage("Story izleme islemi basladi.", 3)
-                self.watchStory()
-
+                self.myProfilStats()
+            
             elif(choice == "3"):
-                self.photoSorf()
-
-            elif(choice == "4"):
-                self.warningMessage("Girdim buraya", 1)
-                self.lastPostLike()
-                self.warningMessage("Basardim", 1)
-
-            elif(choice == "5"):
                 self.warningMessage("Girdim buraya", 1)
                 self.userStats()
                 self.warningMessage("Stats Basarili", 1)
-
-            elif(choice == "6"):
+            
+            elif(choice == "4"):
                 self.followingList()
 
+            elif(choice == "5"):
+                self.warningMessage("Story izleme islemi basladi.", 3)
+                self.watchStory()
+
+            elif(choice == "6"):
+                self.photoSorf()
+
             elif(choice == "7"):
-                self.myProfilStats()
-
-            elif(choice == "8"):
-                self.driver.quit()
-                exit()
-
-            elif(choice == "9"):
-                self.accountControl("merthakanyandas")
-
+                self.lastPostLike()
+            
             # follow
-            elif(choice == "10"):
+            elif(choice == "8"):
                 self.follow("dimitrispelkas")
                 self.follow("stevengerrard")
                 self.follow("selim_caan")
 
             # unfollow
-            elif(choice == "11"):
+            elif(choice == "9"):
                 self.unfollow("dimitrispelkas")
                 self.unfollow("laclippers")
                 self.unfollow("selim_caan")
 
             # toplu follow
-            elif(choice == "12"):
+            elif(choice == "10"):
                 follow_list = ["ozan", "dimitrispelkas", "merthakanyandas", "fcbayern", "fenerbahce", "laclippers"]
                 self.followList(follow_list)
+
+            # account control
+            elif(choice == "11"):
+                self.accountControl("merthakanyandas")
+
+            elif(choice == "12"):
+                self.driver.quit()
+                exit()
 
             else:
                 self.warningMessage("Yanlis secim yaptiniz.", 2)
                 self.Menu()
 
-
 instagramBot = Instagram()
-# instagramBot.logIn()
