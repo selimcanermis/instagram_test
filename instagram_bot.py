@@ -38,11 +38,10 @@ class Instagram:
     # Giris fonksiyonu. username ve password yazarak buton ile giris sagliyor.
     def logIn(self):
         print("-"*50)
-        #self.username = input("lutfen kullanici adinizi giriniz: ")
-        #self.password = input("lutfen sifrenizi giriniz: ")
+        self.username = input("lutfen kullanici adinizi giriniz: ")
+        self.password = input("lutfen sifrenizi giriniz: ")
 
-        self.username = "jamorant001@gmail.com"
-        self.password = "123fb123"
+        
 
         login_url = "https://www.instagram.com/"
         self.driver.get(login_url)
