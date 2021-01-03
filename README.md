@@ -2,11 +2,11 @@
 Python Selenium ile geliştirilen bir instagram test/bot uygulaması
 
 
-# # Açıklama
+## Açıklama
 Bu kod python dili ve selenium kütüphanesi kullanılarak hazırlanmıştır.
 Kullanıcının giriş bilgilerini alıp/kullanarak instagram.com üzerinden otomatik işlemler yapması amaçlanmıştır.
 
-# # Neler Yapabilir?
+## Neler Yapabilir?
 Web driver üzerine yolladığımız instagram.com url'i ile otomatik olarak sayfa açılır.
 
 - Giriş/Çıkış Işlemleri
@@ -23,13 +23,13 @@ Web driver üzerine yolladığımız instagram.com url'i ile otomatik olarak say
 - Aranan Kullanıcı Hesabının Var Olup Olmadığını Oğrenme 
 - Aranan Kullanıcının Hesap Gizliliğini Oğrenme
 
-# # Gereklilikler
+## Gereklilikler
 
 - chrome
 - selenium 3.141.0
 - requests==2.24.0
 - termcolor==1.1.0
 
-# # Kullanım
+## Kullanım
 
 python instagram_bot.py
