@@ -21,7 +21,6 @@ class Instagram:
         self.script()
         self.logIn()
 
-    # ✔ ✔ ✔ ✔ ✔ ✔ ✔ ✔ ✔ ✔ ✔ ✔
     # Uygulama acilisinda cikacak olan script yazi
     def script(self):
         print("#"*50)
@@ -33,8 +32,7 @@ class Instagram:
         print("#python_version   :3.8.6                         #")
         print("#selenium_version :3.141.0                       #")
         print("#"*50)
-
-    # ✔ ✔ ✔ ✔ ✔ ✔ ✔ ✔ ✔ ✔ ✔ ✔
+        
     # Giris fonksiyonu. username ve password yazarak buton ile giris sagliyor.
     def logIn(self):
         print("-"*50)
@@ -64,13 +62,11 @@ class Instagram:
         print("-"*50)
         self.Menu()
 
-    # ✔ ✔ ✔ ✔ ✔ ✔ ✔ ✔ ✔ ✔ ✔ ✔
     # instagram.com sayfasi = base sayfamiz
     def homePage(self):
         home_url = "https://www.instagram.com/"
         self.driver.get(home_url)
 
-    # ✔ ✔ ✔ ✔ ✔ ✔ ✔ ✔ ✔ ✔ ✔ ✔
     # kullaniciya renkli uyari mesaji veren fonksiyon yapisi
     def warningMessage(self, mesaj, durum):
         if int(durum) == 1:
@@ -80,8 +76,7 @@ class Instagram:
         elif int(durum) == 3:
             warning = colored(mesaj, "blue")
         print(warning)
-
-    # ✔ ✔ ✔ ✔ ✔ ✔ ✔ ✔ ✔ ✔ ✔ ✔
+        
     # public - private durumu kontrolu yapan fonksiyon yapisi
     def isPublic(self):
         self.is_public = True
@@ -91,7 +86,6 @@ class Instagram:
         else:
             self.is_public = True
 
-    # ✔ ✔ ✔ ✔ ✔ ✔ ✔ ✔ ✔ ✔ ✔ ✔
     # takip edilip edilmeme kontrolü yapan fonksiyon yapisiu
     def isFollowing(self):
         follow_button = self.driver.find_element_by_xpath("//*[@id='react-root']/section/main/div/header/section/div[1]/div[2]/div/div/div/span/span[1]/button").text
@@ -101,7 +95,6 @@ class Instagram:
         else:
             self.is_following = True
 
-    # ✔ ✔ ✔ ✔ ✔ ✔ ✔ ✔ ✔ ✔ ✔ ✔
     # Arama fonksiyonu kullanicidan aranacak kelimeyi alip
     # arama kutusuna yaziyor ve ilk gelen sonuca tikliyor.
     def search(self, hashtag):
@@ -113,7 +106,6 @@ class Instagram:
         searchAccount.click()
         time.sleep(5)
 
-    # ✔ ✔ ✔ ✔ ✔ ✔ ✔ ✔ ✔ ✔ ✔ ✔
     # kullanici ismi isteyerek profilindeki son postu begenen fonksiyon yapisi
     def lastPostLike(self):
         userPost = input("Begenmek istediginiz kullanici: ")
@@ -139,7 +131,6 @@ class Instagram:
         self.warningMessage("izliyorum", 3)
         time.sleep(100)
 
-    # ✔ ✔ ✔ ✔ ✔ ✔ ✔ ✔ ✔ ✔ ✔ ✔
     # kullanici ismi isteyerek profilindeki postlari gezen fonksiyon yapisi
     def photoSorf(self):
         userPost = input("Kullanici adi: ")
@@ -174,7 +165,6 @@ class Instagram:
         else:
             self.warningMessage("({0}) => Bu hesap gizlidir.".format(userPost), 2)
 
-    # ✔ ✔ ✔ ✔ ✔ ✔ ✔ ✔ ✔ ✔ ✔ ✔  
     def myProfilStats(self):
         self.homePage()
         profil = self.driver.find_element_by_class_name("gmFkV").send_keys(Keys.ENTER)
@@ -191,7 +181,6 @@ class Instagram:
         print("Takipci.....:   " + followers_numbers)
         print("Takip.......:   " + following_numbers)
     
-    # ✔ ✔ ✔ ✔ ✔ ✔ ✔ ✔ ✔ ✔ ✔ ✔
     # kullanici istatistiklerini alan fonksiyon yapisi
     # kullanici bilgisi karsidan alinir. (search metodu ile bulunur)
     # stats olarak (username - post sayisi - takipci- takip edilen - )
@@ -233,7 +222,6 @@ class Instagram:
         else:
             self.warningMessage("({0}) => Bu hesap gizlidir.".format(userStat), 2)
 
-    # ✔ ✔ ✔ ✔ ✔ ✔ ✔ ✔ ✔ ✔ ✔ ✔
     # photoSorf() fonksiyon icinde bir sonraki posta gecen yardimci fonksiyon yapisi
     def nextPost(self, i):
         if(i == 0):
@@ -242,7 +230,6 @@ class Instagram:
             next_post = self.driver.find_element_by_xpath("/html/body/div[5]/div[1]/div/div/a[2]")
         next_post.click()
 
-    # ✔ ✔ ✔ ✔ ✔ ✔ ✔ ✔ ✔ ✔ ✔ ✔
     # kullanici ismi isteyerek takip ettiklerinin listesini veren fonksiyon yapisi
     def followingList(self):
         _user = input("Aradiginiz kullanici: ")
@@ -279,7 +266,6 @@ class Instagram:
         else:
             self.warningMessage("({0}) => Bu hesap gizlidir.".format(_user), 2)
      
-    # ✔ ✔ ✔ ✔ ✔ ✔ ✔ ✔ ✔ ✔ ✔ ✔
     # kullanıcı urlsinin calisip calismadigini kontrol eden fonksiyon yapisi
     def accountControl(self, account):
         self.account_url = self.url + account
@@ -292,7 +278,6 @@ class Instagram:
             print("True")  # sil
             return True
 
-    # ✔ ✔ ✔ ✔ ✔ ✔ ✔ ✔ ✔ ✔ ✔ ✔
     def follow(self, account):
         self.account_url = self.url + account
         self.driver.get(self.account_url)
@@ -311,7 +296,6 @@ class Instagram:
         else:
             self.warningMessage("({0}) => Bu hesap gizlidir.".format(account), 2)
 
-    # ✔ ✔ ✔ ✔ ✔ ✔ ✔ ✔ ✔ ✔ ✔ ✔
     # private olayini ayarla
     def unfollow(self, account):
         self.account_url = self.url + account
@@ -341,7 +325,6 @@ class Instagram:
         else:
             self.warningMessage("({0}) => Bu hesap gizlidir.".format(account), 2)
 
-    # ✔ ✔ ✔ ✔ ✔ ✔ ✔ ✔ ✔ ✔ ✔ ✔
     def followList(self, account_list):
         for item in range(len(account_list)):
             self.account_url = self.url + account_list[item]
@@ -360,7 +343,6 @@ class Instagram:
                 follow_button.click()
                 self.warningMessage("({0}) => Takip edildi.".format(account_list[item]), 3)
     
-    # ✔ ✔ ✔ ✔ ✔ ✔ ✔ ✔ ✔ ✔ ✔ ✔  
     def Menu(self):
         while True:
             print("#"*50)
